@@ -1,24 +1,209 @@
 import React from 'react'
-import {sortByItemCount} from './sortOrders';
+import {sortTypes, sortOrders, getSortFunction, sortByItemCount, sortByDate} from './sortOrders';
+import {fakeOrders} from '../data/fakeOrders.js';
+import {getDate} from "./getDate";
+
+describe('getSortFunction function', () => {
+	it('date sort type', () => {
+		const result = getSortFunction(sortTypes.DATE);
+		expect(result).toBe(sortByDate);
+	});
+	
+	it('count sort type', () => {
+		const result = getSortFunction(sortTypes.COUNT);
+		expect(result).toBe(sortByItemCount);
+	});
+	
+	it('sort type is null', () => {
+		const result = getSortFunction(null);
+		expect(result).toBe(undefined);
+	});
+});
 
 describe('sortByItemCount function', () => {
 	it('orders are null', () => {
 		const result = sortByItemCount(null, null);
 		expect(result).toEqual(0);
 	});
-
+	
+	it('orders are not objects', () => {
+		const result = sortByItemCount(1, 1);
+		expect(result).toBe(0);
+	});
+	
 	it('same items count', () => {
 		const order1 = {
 			items: ['item1', 'item2'],
 		};
-
+		
 		const order2 = {
 			items: ['1', '2'],
 		};
-
+		
 		const result = sortByItemCount(order1, order2);
-
+		
 		expect(result).toBe(0);
+	});
+	
+	it('items are null', () => {
+		const order1 = {
+			items: null,
+		};
+		
+		const order2 = {
+			items: null,
+		};
+		
+		const result = sortByItemCount(order1, order2);
+		
+		expect(result).toBe(0);
+	});
+	
+	it('items1 < items2', () => {
+		const order1 = {
+			items: ['item1'],
+		};
+		
+		const order2 = {
+			items: ['1', '2'],
+		};
+		
+		const result = sortByItemCount(order1, order2);
+		
+		expect(result).toBe(-1);
+	});
+	
+	it('items1 > items2', () => {
+		const order1 = {
+			items: ['item1', 'item2'],
+		};
+		
+		const order2 = {
+			items: ['1'],
+		};
+		
+		const result = sortByItemCount(order1, order2);
+		
+		expect(result).toBe(1);
+	});
+});
+
+describe('sortByDate function', () => {
+	it('orders are null', () => {
+		const result = sortByDate(null, null);
+		expect(result).toEqual(0);
+	});
+	
+	it('orders are not objects', () => {
+		const result = sortByDate(1, 1);
+		expect(result).toBe(0);
+	});
+	
+	it('dates are null', () => {
+		const order1 = {
+			date: null,
+		};
+		
+		const order2 = {
+			date: null,
+		};
+		
+		const result = sortByDate(order1, order2);
+		
+		expect(result).toBe(0);
+	});
+	
+	it('date1 < date2', () => {
+		const date1 = Date.now(), date2 = date1 + 1;
+		
+		const order1 = {
+			date: date1,
+		};
+		
+		const order2 = {
+			date: date2,
+		};
+		
+		const result = sortByDate(order1, order2);
+		expect(result).toBe(1);
+	});
+	
+	it('date1 > date2', () => {
+		const date1 = Date.now(), date2 = date1 - 1;
+		
+		const order1 = {
+			date: date1,
+		};
+		
+		const order2 = {
+			date: date2,
+		};
+		
+		const result = sortByDate(order1, order2);
+		expect(result).toBe(-1);
+	});
+	
+	it('date1 == date2', () => {
+		const date1 = Date.now(), date2 = date1;
+		
+		const order1 = {
+			date: date1,
+		};
+		
+		const order2 = {
+			date: date2,
+		};
+		
+		const result = sortByDate(order1, order2);
+		expect(result).toBe(0);
+	});
+});
+
+describe('sortOrders function', () => {
+	it('orders is null', () => {
+		const mockFunction = jest.fn();
+		
+		sortOrders(null, mockFunction);
+		expect(mockFunction).toHaveBeenCalledTimes(0);
+	});
+	it('sortOrders is null', () => {
+		const orders = fakeOrders;
+		
+		sortOrders(orders, null);
+		expect(orders).toStrictEqual(fakeOrders);
+	});
+	
+	it('sortOrders function has been called', () => {
+		const orders = fakeOrders;
+		const mockFunction = jest.fn();
+		
+		sortOrders(orders, mockFunction);
+		expect(mockFunction).toHaveBeenCalled();
+	});
+	
+	it('sort orders by items count', () => {
+		const orders = fakeOrders;
+		
+		const resultOrders = [fakeOrders[2], fakeOrders[0], fakeOrders[1]];
+		
+		sortOrders(orders, getSortFunction(sortTypes.COUNT));
+		expect(orders).toStrictEqual(resultOrders);
+	});
+	
+	it('sort orders by date', () => {
+		const orders = fakeOrders;
+		
+		const resultOrders = [fakeOrders[0], fakeOrders[2], fakeOrders[1]];
+		
+		sortOrders(orders, getSortFunction(sortTypes.DATE));
+		expect(orders).toStrictEqual(resultOrders);
+	});
+});
+
+describe('getDate function', () => {
+	it('timestamp is null', () => {
+		const result = getDate(null);
+		expect(result).toBe(undefined);
 	});
 });
 
