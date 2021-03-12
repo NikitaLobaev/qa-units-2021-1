@@ -24,19 +24,11 @@ describe('Order.js', () => {
 			order = {null}
 		/>);
 		
-		expect(wrapper).toMatchSnapshot();
-	});
-	
-	it('order is null', () => {
-		const wrapper = shallow(<Order
-			order = {null}
-		/>);
-		
 		expect(getDate).toHaveBeenCalledTimes(0);
 		expect(wrapper).toMatchSnapshot();
 	});
 	
-	it('order shop and date are null', () => {
+	it('order date and items are null', () => {
 		const order = {
 			id: 123,
 			date: null,

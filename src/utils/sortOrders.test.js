@@ -16,7 +16,7 @@ describe('getSortFunction function', () => {
 	
 	it('sort type is null', () => {
 		const result = getSortFunction(null);
-		expect(result).toBe(undefined);
+		expect(result).toBeUndefined();
 	});
 });
 
@@ -59,7 +59,7 @@ describe('sortByItemCount function', () => {
 		expect(result).toBe(0);
 	});
 	
-	it('items1 < items2', () => {
+	it('less items in order1 than in order2', () => {
 		const order1 = {
 			items: ['item1'],
 		};
@@ -73,7 +73,7 @@ describe('sortByItemCount function', () => {
 		expect(result).toBe(-1);
 	});
 	
-	it('items1 > items2', () => {
+	it('less items in order2 than in order1', () => {
 		const order1 = {
 			items: ['item1', 'item2'],
 		};
@@ -200,10 +200,10 @@ describe('sortOrders function', () => {
 	});
 });
 
-describe('getDate function', () => {
+/*describe('getDate function', () => {
 	it('timestamp is null', () => {
 		const result = getDate(null);
-		expect(result).toBe(undefined);
+		expect(result).toBeUndefined();
 	});
-});
+});*/
 
