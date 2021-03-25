@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Order.js order date and items are null 1`] = `""`;
+exports[`Order.js order date and items are null, snapshot matched 1`] = `""`;
 
-exports[`Order.js order is null 1`] = `""`;
+exports[`Order.js order is null, snapshot matched 1`] = `""`;
 
-exports[`Order.js render with some fake data 1`] = `
+exports[`Order.js render with some fake data, snapshot matched 1`] = `
 <div
   className="Order"
 >

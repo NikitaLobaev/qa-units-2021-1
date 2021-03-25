@@ -19,16 +19,23 @@ describe('Order.js', () => {
 		getDate.mockClear();
 	});
 	
-	it('order is null', () => {
+	it('order is null, snapshot matched', () => {
 		const wrapper = shallow(<Order
 			order = {null}
 		/>);
 		
-		expect(getDate).toHaveBeenCalledTimes(0);
 		expect(wrapper).toMatchSnapshot();
 	});
 	
-	it('order date and items are null', () => {
+	it('order is null, getDate has not been called', () => {
+		shallow(<Order
+			order = {null}
+		/>);
+		
+		expect(getDate).toHaveBeenCalledTimes(0);
+	});
+	
+	it('order date and items are null, snapshot matched', () => {
 		const order = {
 			id: 123,
 			date: null,
@@ -40,19 +47,42 @@ describe('Order.js', () => {
 			order = {order}
 		/>);
 		
-		expect(getDate).toHaveBeenCalledTimes(0);
 		expect(wrapper).toMatchSnapshot();
 	});
 	
-	it('render with some fake data', () => {
+	it('order date and items are null, getDate has not been called', () => {
+		const order = {
+			id: 123,
+			date: null,
+			shop: 'Alihandro Express',
+			items: null
+		}
+		
+		shallow(<Order
+			order = {order}
+		/>);
+		
+		expect(getDate).toHaveBeenCalledTimes(0);
+	});
+	
+	it('render with some fake data, snapshot matched', () => {
 		const order = fakeOrders[0];
 		
 		const wrapper = shallow(<Order
 			order = {order}
 		/>);
 		
-		expect(getDate).toHaveBeenCalledTimes(1);
 		expect(wrapper).toMatchSnapshot();
+	});
+	
+	it('render with some fake data, getDate called', () => {
+		const order = fakeOrders[0];
+		
+		shallow(<Order
+			order = {order}
+		/>);
+		
+		expect(getDate).toHaveBeenCalledTimes(1);
 	});
 });
 
