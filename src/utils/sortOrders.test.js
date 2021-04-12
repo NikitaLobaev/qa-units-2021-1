@@ -1,7 +1,6 @@
 import React from 'react'
 import {sortTypes, sortOrders, getSortFunction, sortByItemCount, sortByDate} from './sortOrders';
 import {fakeOrders} from '../data/fakeOrders.js';
-import {getDate} from "./getDate";
 
 describe('getSortFunction function', () => {
 	it('date sort type', () => {
@@ -166,12 +165,6 @@ describe('sortOrders function', () => {
 		sortOrders(null, mockFunction);
 		expect(mockFunction).toHaveBeenCalledTimes(0);
 	});
-	it('sortOrders is null', () => {
-		const orders = fakeOrders;
-		
-		sortOrders(orders, null);
-		expect(orders).toStrictEqual(fakeOrders);
-	});
 	
 	it('sortOrders function has been called', () => {
 		const orders = fakeOrders;
@@ -180,30 +173,4 @@ describe('sortOrders function', () => {
 		sortOrders(orders, mockFunction);
 		expect(mockFunction).toHaveBeenCalled();
 	});
-	
-	it('sort orders by items count', () => {
-		const orders = fakeOrders;
-		
-		const resultOrders = [fakeOrders[2], fakeOrders[0], fakeOrders[1]];
-		
-		sortOrders(orders, getSortFunction(sortTypes.COUNT));
-		expect(orders).toStrictEqual(resultOrders);
-	});
-	
-	it('sort orders by date', () => {
-		const orders = fakeOrders;
-		
-		const resultOrders = [fakeOrders[0], fakeOrders[2], fakeOrders[1]];
-		
-		sortOrders(orders, getSortFunction(sortTypes.DATE));
-		expect(orders).toStrictEqual(resultOrders);
-	});
 });
-
-/*describe('getDate function', () => {
-	it('timestamp is null', () => {
-		const result = getDate(null);
-		expect(result).toBeUndefined();
-	});
-});*/
-
