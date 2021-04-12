@@ -24,7 +24,8 @@ describe('Order.js', () => {
 			order = {null}
 		/>);
 		
-		expect(wrapper).toMatchSnapshot();
+		//expect(wrapper).toMatchSnapshot();
+		expect(wrapper.getElement()).toBeNull();
 	});
 	
 	it('order is null, getDate has not been called', () => {

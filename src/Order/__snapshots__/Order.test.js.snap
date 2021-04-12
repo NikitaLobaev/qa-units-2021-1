@@ -2,8 +2,6 @@
 
 exports[`Order.js order date and items are null, snapshot matched 1`] = `""`;
 
-exports[`Order.js order is null, snapshot matched 1`] = `""`;
-
 exports[`Order.js render with some fake data, snapshot matched 1`] = `
 <div
   className="Order"
